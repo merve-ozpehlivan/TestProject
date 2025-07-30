@@ -9,3 +9,12 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+
+
+val Yesil = Color(0xFF57CB81)
+val AcikYesil = Color(0xFFD9FFE5)
+val Beyaz = Color(0xFFFFFFFF)
+val Siyah = Color(0xFF000000)
+val Gri = Color(0xFFEEEEEE)
+
+

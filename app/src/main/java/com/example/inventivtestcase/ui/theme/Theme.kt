@@ -2,6 +2,7 @@ package com.example.inventivtestcase.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -34,14 +35,24 @@ fun InventivTestCaseTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
+    when {
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
     MaterialTheme(
-        colors = colorScheme,
+        colors = lightColors(
+            primary = Yesil,
+            primaryVariant = AcikYesil,
+            onPrimary = Beyaz,
+            surface = Beyaz,
+            background = Gri,
+            onBackground = Siyah,
+            onSurface = Siyah
+        ),
         typography = Typography,
+        shapes = Shapes(),
         content = content
     )
+
 }
