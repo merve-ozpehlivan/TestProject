@@ -1,13 +1,25 @@
 package com.example.inventivtestcase.utils
 
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
+
 fun String.maskCardNumber(): String {
-    val digitsOnly = this.filter { it.isDigit() }
+    val numbers = filter(Char::isDigit)
+    return if (numbers.length >= 8) {
+        "${numbers.take(4)} **** **** ${numbers.takeLast(4)}"
+    } else this
+}
 
-    if (digitsOnly.length <= 8) return this
+fun String.formatAsTLFromMinorUnit(): String {
+    val kurus = toLongOrNull() ?: return this
+    val lira = kurus / 100.0
 
-    val visiblePart = digitsOnly.takeLast(8)
-    val maskedLength = digitsOnly.length - 8
-    val masked = "*".repeat(maskedLength)
+    val formatSymbols = DecimalFormatSymbols(Locale("tr", "TR")).apply {
+        groupingSeparator = '.'
+        decimalSeparator = ','
+    }
 
-    return masked + visiblePart
+    val formatter = DecimalFormat("#,##0.00", formatSymbols)
+    return "${formatter.format(lira)} TL"
 }

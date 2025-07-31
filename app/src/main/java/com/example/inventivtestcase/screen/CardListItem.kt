@@ -21,6 +21,7 @@ import com.example.inventivtestcase.R
 import com.example.inventivtestcase.model.Card
 import com.example.inventivtestcase.ui.theme.Beyaz
 import com.example.inventivtestcase.ui.theme.Siyah
+import com.example.inventivtestcase.utils.formatAsTLFromMinorUnit
 import com.example.inventivtestcase.utils.maskCardNumber
 
 
@@ -57,9 +58,11 @@ fun CardListItem(
             Spacer(modifier = Modifier.width(16.dp))
 
             Column {
-                Text(text = card.number.maskCardNumber(), color = Siyah)  // Burada çağırdık
-                Text(text = "Bakiye: ${card.balance.value} ${card.balance.currency}")
-
+                Text(text = card.number.maskCardNumber(), color = Siyah)
+                Text(
+                    text = "Bakiye: ${card.balance.value.formatAsTLFromMinorUnit()}",
+                    color = Siyah
+                )
             }
         }
     }
