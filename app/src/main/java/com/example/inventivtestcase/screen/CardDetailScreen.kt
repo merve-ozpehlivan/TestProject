@@ -1,5 +1,6 @@
 package com.example.inventivtestcase.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +32,7 @@ import com.example.inventivtestcase.R
 import com.example.inventivtestcase.ui.theme.KoyuYesil
 import com.example.inventivtestcase.ui.theme.Siyah
 import com.example.inventivtestcase.utils.formatAsTLFromMinorUnit
+import com.example.inventivtestcase.utils.formatCardNumber
 import com.example.inventivtestcase.utils.maskCardNumber
 
 @Composable
@@ -49,6 +52,7 @@ fun CardDetailScreen(
     }
 
     val card by detailViewModel.card.collectAsState()
+    val isSensitiveInfoVisible = remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -69,6 +73,23 @@ fun CardDetailScreen(
                         .fillMaxSize()
                         .padding(20.dp)
                 ) {
+                    Icon(
+                        painter = painterResource(
+                            id = if (isSensitiveInfoVisible.value)
+                                R.drawable.eye_slash_svgrepo_com
+                            else
+                                R.drawable.eye_svgrepo_com
+                        ),
+                        contentDescription = "Bilgileri Göster/Gizle",
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .clickable {
+                                isSensitiveInfoVisible.value = !isSensitiveInfoVisible.value
+                            }
+                            .size(28.dp),
+                        tint = Color.White
+                    )
+
                     Column(
                         verticalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxHeight()
@@ -81,7 +102,7 @@ fun CardDetailScreen(
                         )
 
                         Text(
-                            text = card.number.maskCardNumber(),
+                            text = if (isSensitiveInfoVisible.value) card.number.formatCardNumber() else card.number.maskCardNumber(),
                             color = Color.White,
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
@@ -93,7 +114,7 @@ fun CardDetailScreen(
                             verticalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
                             Text(
-                                "CVV: ${card.cvv}",
+                                "CVV: ${if (isSensitiveInfoVisible.value) card.cvv else "***"}",
                                 color = Color.White,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.SemiBold
@@ -113,14 +134,6 @@ fun CardDetailScreen(
                         }
                     }
 
-                    Icon(
-                        painter = painterResource(id = R.drawable.mastercard_full_svgrepo_com),
-                        contentDescription = "Kart Tipi",
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .size(50.dp),
-                        tint = Color.Unspecified
-                    )
                 }
             }
         } ?: Text(

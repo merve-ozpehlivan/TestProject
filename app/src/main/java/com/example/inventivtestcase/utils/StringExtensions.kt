@@ -23,3 +23,6 @@ fun String.formatAsTLFromMinorUnit(): String {
     val formatter = DecimalFormat("#,##0.00", formatSymbols)
     return "${formatter.format(lira)} TL"
 }
+
+fun String.formatCardNumber(): String =
+    chunked(4).joinToString(" ")

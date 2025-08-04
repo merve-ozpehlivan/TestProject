@@ -3,7 +3,7 @@ package com.example.inventivtestcase.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,6 +11,7 @@ import com.example.inventivtestcase.screen.CardDetailScreen
 import com.example.inventivtestcase.screen.CardDetailViewModel
 import com.example.inventivtestcase.screen.CardsScreen
 import com.example.inventivtestcase.screen.CardsViewModel
+
 
 object Routes {
     const val CARD_LIST = "cardList"
@@ -22,8 +23,8 @@ fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val cardsViewModel: CardsViewModel = viewModel()
-    val cardDetailViewModel: CardDetailViewModel = viewModel()
+    val cardsViewModel: CardsViewModel = hiltViewModel()
+    val cardDetailViewModel: CardDetailViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,

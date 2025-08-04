@@ -3,21 +3,24 @@ package com.example.inventivtestcase.screen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inventivtestcase.api.ApiUtils
+import com.example.inventivtestcase.api.CardsDaoInterface
 import com.example.inventivtestcase.model.Card
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CardsViewModel : ViewModel() {
+@HiltViewModel
+class CardsViewModel @Inject constructor(
+    private val api: CardsDaoInterface
+) : ViewModel() {
 
     private val _cards = MutableStateFlow<List<Card>>(emptyList())
     val cards: StateFlow<List<Card>> = _cards
 
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
-
-    private val api = ApiUtils.getCardsDaoInterface()
 
     fun fetchCards() {
         viewModelScope.launch {
